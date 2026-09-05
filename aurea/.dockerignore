@@ -1,0 +1,12 @@
+.git
+.gitignore
+.vscode
+.tmp
+src
+mvnw
+mvnw.cmd
+.mvn
+HELP.md
+hs_err_pid*.log
+target/*
+!target/aurea-0.0.1-SNAPSHOT.jar

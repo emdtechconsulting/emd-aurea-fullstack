@@ -1,0 +1,96 @@
+﻿# ==========================================
+# AUREA - Git Ignore
+# EMD Tech Consulting
+# ==========================================
+
+# ------------------------------------------
+# Variables de entorno
+# ------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------
+# Credenciales y claves privadas
+# ------------------------------------------
+**/credentials.json
+**/service-account.json
+**/service_account.json
+**/*-credentials.json
+**/*_credentials.json
+**/*.pem
+**/*.p12
+**/*.pfx
+**/*.key
+
+# ------------------------------------------
+# Directorios privados
+# ------------------------------------------
+**/99-PRIVATE/
+**/backups/
+**/backup/
+**/private/
+
+# ------------------------------------------
+# Dumps / copias de bases de datos
+# ------------------------------------------
+**/*.dump
+**/*.bak
+**/*.sql.gz
+**/*.dump.gz
+
+# Firebase exports de datos
+**/AUREA_Backup_*.txt
+**/firebase-export/
+**/firebase-exports/
+
+# IMPORTANTE:
+# NO ignorar *.sql globalmente.
+# Los scripts Flyway V1/V2/V3 deben versionarse.
+
+# ------------------------------------------
+# Java / Maven
+# ------------------------------------------
+**/target/
+*.class
+*.jar.original
+
+# ------------------------------------------
+# JVM crash logs
+# ------------------------------------------
+hs_err_pid*.log
+replay_pid*.log
+
+# ------------------------------------------
+# Node / React / Vite
+# ------------------------------------------
+**/node_modules/
+**/dist/
+**/.vite/
+
+# ------------------------------------------
+# IDE
+# ------------------------------------------
+.vscode/
+.idea/
+*.iml
+
+# ------------------------------------------
+# Sistema operativo
+# ------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------
+# Logs
+# ------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ------------------------------------------
+# Temporales
+# ------------------------------------------
+*.tmp
+*.temp

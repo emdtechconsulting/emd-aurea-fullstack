@@ -1,0 +1,59 @@
+[
+  {
+    "category": "TRIPLES",
+    "displayOrder": 1,
+    "items": [
+      {"name":"Clásico (huevo, palta, tomate)","prices":[{"quantity":25,"price":40.00},{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"Mixto (jamón y queso)","prices":[{"quantity":25,"price":35.00},{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]},
+      {"name":"Mixto tropical (jamón, queso y durazno)","prices":[{"quantity":25,"price":40.00},{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"Mixto especial (pollo, jamón y queso)","prices":[{"quantity":25,"price":45.00},{"quantity":50,"price":80.00},{"quantity":100,"price":140.00}]},
+      {"name":"Hawaiano (jamón, pollo y durazno)","prices":[{"quantity":25,"price":45.00},{"quantity":50,"price":80.00},{"quantity":100,"price":140.00}]}
+    ]
+  },
+  {
+    "category": "SANGUCHITOS",
+    "displayOrder": 2,
+    "items": [
+      {"name":"De pollo y apio","prices":[{"quantity":25,"price":35.00},{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]},
+      {"name":"De pollo con apio y durazno","prices":[{"quantity":25,"price":40.00},{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"De huevo con tocino","prices":[{"quantity":25,"price":35.00},{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]},
+      {"name":"De tocino, espinaca y queso crema","prices":[{"quantity":25,"price":45.00},{"quantity":50,"price":80.00},{"quantity":100,"price":140.00}]}
+    ]
+  },
+  {
+    "category": "PETIPANES",
+    "displayOrder": 3,
+    "items": [
+      {"name":"De pollo con apio","prices":[{"quantity":25,"price":35.00},{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]},
+      {"name":"De pollo, apio y durazno","prices":[{"quantity":25,"price":40.00},{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"De huevo y tocino","prices":[{"quantity":25,"price":35.00},{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]}
+    ]
+  },
+  {
+    "category": "MINI CROISSANT",
+    "displayOrder": 4,
+    "items": [
+      {"name":"De pollo con apio","prices":[{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"De pollo, apio y durazno","prices":[{"quantity":50,"price":80.00},{"quantity":100,"price":140.00}]},
+      {"name":"De queso y jamón","prices":[{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]},
+      {"name":"De huevo y tocino","prices":[{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]}
+    ]
+  },
+  {
+    "category": "PANES VARIOS",
+    "displayOrder": 5,
+    "items": [
+      {"name":"Mini butifarras (sarsa criolla, jamón del país y lechuga)","prices":[{"quantity":50,"price":65.00},{"quantity":100,"price":120.00}]},
+      {"name":"Capresse (tomate, queso fresco, albahaca)","prices":[{"quantity":50,"price":70.00},{"quantity":100,"price":130.00}]}
+    ]
+  },
+  {
+    "category": "OTROS",
+    "displayOrder": 6,
+    "items": [
+      {"name":"Tequeños (queso paria)","prices":[{"quantity":25,"price":30.00},{"quantity":50,"price":55.00},{"quantity":100,"price":100.00}]},
+      {"name":"Mini causitas","prices":[{"quantity":25,"price":25.00},{"quantity":50,"price":45.00},{"quantity":100,"price":80.00}]},
+      {"name":"Mini causitas de pollo","prices":[{"quantity":25,"price":30.00},{"quantity":50,"price":50.00},{"quantity":100,"price":90.00}]}
+    ]
+  }
+]
