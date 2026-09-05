@@ -97,8 +97,8 @@ aurea-fullstack
 
 ## Autor
 
-Javier Enriquez Morales
-Director General
+Javier Enriquez Morales<br>
+Director General<br>
 EMD Tech Consulting
 
 
