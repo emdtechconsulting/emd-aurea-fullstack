@@ -1,0 +1,47 @@
+﻿<main class="dashboard">
+  <header>
+    <div class="brand">
+      <span>A</span>
+
+      <div>
+        <strong>AUREA</strong>
+        <small>EMD Tech Consulting</small>
+      </div>
+    </div>
+
+    <button type="button" (click)="logout()">
+      Cerrar sesión
+    </button>
+  </header>
+
+  <section class="welcome">
+    <p>Panel principal</p>
+
+    <h1>
+      Bienvenido, {{ session()?.username }}
+    </h1>
+
+    <span class="role">
+      Rol: {{ session()?.role }}
+    </span>
+  </section>
+
+  <section class="cards">
+    <article>
+      <strong>Productos</strong>
+      <p>Administración del catálogo AUREA.</p>
+    </article>
+
+    <article>
+      <strong>Pedidos</strong>
+      <p>Registro y seguimiento de pedidos.</p>
+    </article>
+
+    <article>
+      <strong>Integración</strong>
+      <p>
+        Angular, Spring Boot, JWT y MariaDB conectados.
+      </p>
+    </article>
+  </section>
+</main>

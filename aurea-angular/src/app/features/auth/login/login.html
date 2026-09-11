@@ -1,0 +1,108 @@
+﻿<main class="login-page">
+  <section class="brand-panel">
+    <div class="brand">
+      <span class="brand-mark">A</span>
+
+      <div>
+        <strong>AUREA</strong>
+        <span>Gestión inteligente de pedidos</span>
+      </div>
+    </div>
+
+    <div class="brand-content">
+      <p class="eyebrow">EMD Tech Consulting</p>
+
+      <h1>
+        Convierte cada pedido en una experiencia extraordinaria.
+      </h1>
+
+      <p class="description">
+        Productos, pedidos y operaciones organizados desde una
+        plataforma segura, moderna y escalable.
+      </p>
+
+      <img
+        src="/hero.png"
+        alt="Plataforma tecnológica AUREA"
+      />
+    </div>
+  </section>
+
+  <section class="form-panel">
+    <div class="login-card">
+      <div class="mobile-brand">
+        <span class="brand-mark">A</span>
+        <strong>AUREA</strong>
+      </div>
+
+      <p class="eyebrow">Acceso seguro</p>
+      <h2>Bienvenido</h2>
+
+      <p class="form-description">
+        Ingresa tus credenciales para acceder al sistema.
+      </p>
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="submit()"
+        novalidate
+      >
+        <label for="username">Usuario</label>
+
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          placeholder="Ingresa tu usuario"
+        />
+
+        @if (
+          loginForm.controls.username.touched &&
+          loginForm.controls.username.invalid
+        ) {
+          <p class="field-error">
+            El usuario es obligatorio.
+          </p>
+        }
+
+        <label for="password">Contraseña</label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="Ingresa tu contraseña"
+        />
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.invalid
+        ) {
+          <p class="field-error">
+            La contraseña es obligatoria.
+          </p>
+        }
+
+        @if (errorMessage()) {
+          <div class="server-error" role="alert">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        <button type="submit" [disabled]="submitting()">
+          @if (submitting()) {
+            Ingresando...
+          } @else {
+            Iniciar sesión
+          }
+        </button>
+      </form>
+
+      <p class="security-note">
+        Acceso protegido mediante autenticación JWT.
+      </p>
+    </div>
+  </section>
+</main>
