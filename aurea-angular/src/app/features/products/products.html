@@ -1,0 +1,103 @@
+﻿<section class="products-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">AUREA · Catálogo</span>
+      <h1>Productos</h1>
+      <p>
+        Consulta el catálogo y sus precios registrados en MariaDB.
+      </p>
+    </div>
+
+    <div class="summary">
+      <article>
+        <strong>{{ products().length }}</strong>
+        <span>Total</span>
+      </article>
+
+      <article>
+        <strong>{{ activeProducts() }}</strong>
+        <span>Activos</span>
+      </article>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="state-card">
+      <span class="loader" aria-hidden="true"></span>
+      <h2>Cargando productos</h2>
+      <p>Estamos consultando la API de AUREA.</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div class="state-card error-card">
+      <h2>No pudimos cargar el catálogo</h2>
+      <p>{{ errorMessage() }}</p>
+
+      <button type="button" (click)="loadProducts()">
+        Intentar nuevamente
+      </button>
+    </div>
+  } @else if (products().length === 0) {
+    <div class="state-card">
+      <h2>No existen productos registrados</h2>
+      <p>El catálogo se encuentra vacío.</p>
+    </div>
+  } @else {
+    <div class="table-card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Descripción</th>
+              <th>Precios</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (product of products(); track product.id) {
+              <tr>
+                <td>
+                  <strong>{{ product.name }}</strong>
+                  <small>ID {{ product.id }}</small>
+                </td>
+
+                <td>
+                  <span class="category">
+                    {{ product.categoryName }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ product.description || 'Sin descripción' }}
+                </td>
+
+                <td>
+                  <div class="prices">
+                    @for (price of product.prices; track price.id) {
+                      <span>
+                        {{ price.quantity }} unidades:
+                        S/ {{ price.price }}
+                      </span>
+                    }
+                  </div>
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.status-active]="product.active"
+                    [class.status-inactive]="!product.active"
+                  >
+                    {{ product.active ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</section>

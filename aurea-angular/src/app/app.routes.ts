@@ -19,6 +19,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'products',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/products/products').then(
+        (component) => component.Products,
+      ),
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'login',
