@@ -1,25 +1,263 @@
-﻿<section class="products-page">
+<section class="products-page">
   <header class="page-header">
     <div>
       <span class="eyebrow">AUREA · Catálogo</span>
       <h1>Productos</h1>
       <p>
-        Consulta el catálogo y sus precios registrados en MariaDB.
+        Consulta el catálogo y registra nuevos productos con
+        precios para 25, 50 y 100 unidades.
       </p>
     </div>
 
-    <div class="summary">
-      <article>
-        <strong>{{ products().length }}</strong>
-        <span>Total</span>
-      </article>
+    <div class="header-actions">
+      <div class="summary">
+        <article>
+          <strong>{{ products().length }}</strong>
+          <span>Total</span>
+        </article>
 
-      <article>
-        <strong>{{ activeProducts() }}</strong>
-        <span>Activos</span>
-      </article>
+        <article>
+          <strong>{{ activeProducts() }}</strong>
+          <span>Activos</span>
+        </article>
+      </div>
+
+      <button
+        class="primary-action"
+        type="button"
+        (click)="toggleProductForm()"
+      >
+        {{ formVisible() ? 'Cerrar formulario' : 'Nuevo producto' }}
+      </button>
     </div>
   </header>
+
+  @if (successMessage()) {
+    <div class="message success-message" role="status">
+      {{ successMessage() }}
+    </div>
+  }
+
+  @if (formVisible()) {
+    <section class="product-form-card">
+      <div class="form-heading">
+        <div>
+          <span class="eyebrow">Nuevo registro</span>
+          <h2>Registrar producto</h2>
+          <p>
+            Completa los datos y precios de venta del producto.
+          </p>
+        </div>
+      </div>
+
+      @if (categoriesLoading()) {
+        <div class="form-state">
+          <span class="loader" aria-hidden="true"></span>
+          <p>Cargando categorías...</p>
+        </div>
+      } @else if (categoryErrorMessage()) {
+        <div class="message error-message" role="alert">
+          <p>{{ categoryErrorMessage() }}</p>
+
+          <button type="button" (click)="loadCategories()">
+            Reintentar
+          </button>
+        </div>
+      } @else if (categories().length === 0) {
+        <div class="message warning-message" role="alert">
+          No existen categorías activas para registrar productos.
+        </div>
+      } @else {
+        <form
+          [formGroup]="productForm"
+          (ngSubmit)="saveProduct()"
+          novalidate
+        >
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="categoryId">Categoría</label>
+
+              <select
+                id="categoryId"
+                formControlName="categoryId"
+              >
+                <option [ngValue]="0" disabled>
+                  Selecciona una categoría
+                </option>
+
+                @for (category of categories(); track category.id) {
+                  <option [ngValue]="category.id">
+                    {{ category.name }}
+                  </option>
+                }
+              </select>
+
+              @if (
+                productForm.controls.categoryId.touched &&
+                productForm.controls.categoryId.invalid
+              ) {
+                <small class="field-error">
+                  Selecciona una categoría.
+                </small>
+              }
+            </div>
+
+            <div class="form-field">
+              <label for="productName">Nombre</label>
+
+              <input
+                id="productName"
+                type="text"
+                formControlName="name"
+                autocomplete="off"
+                placeholder="Ejemplo: Triple especial"
+              />
+
+              @if (
+                productForm.controls.name.touched &&
+                productForm.controls.name.invalid
+              ) {
+                <small class="field-error">
+                  El nombre del producto es obligatorio.
+                </small>
+              }
+            </div>
+
+            <div class="form-field full-width">
+              <label for="description">Descripción</label>
+
+              <textarea
+                id="description"
+                formControlName="description"
+                rows="3"
+                placeholder="Descripción opcional del producto"
+              ></textarea>
+            </div>
+
+            <fieldset class="prices-fieldset full-width">
+              <legend>Precios por cantidad</legend>
+
+              <div class="prices-grid">
+                <div class="form-field">
+                  <label for="price25">25 unidades</label>
+
+                  <div class="money-input">
+                    <span>S/</span>
+
+                    <input
+                      id="price25"
+                      type="number"
+                      formControlName="price25"
+                      min="0.01"
+                      step="0.01"
+                      inputmode="decimal"
+                    />
+                  </div>
+
+                  @if (
+                    productForm.controls.price25.touched &&
+                    productForm.controls.price25.invalid
+                  ) {
+                    <small class="field-error">
+                      Ingresa un precio mayor que cero.
+                    </small>
+                  }
+                </div>
+
+                <div class="form-field">
+                  <label for="price50">50 unidades</label>
+
+                  <div class="money-input">
+                    <span>S/</span>
+
+                    <input
+                      id="price50"
+                      type="number"
+                      formControlName="price50"
+                      min="0.01"
+                      step="0.01"
+                      inputmode="decimal"
+                    />
+                  </div>
+
+                  @if (
+                    productForm.controls.price50.touched &&
+                    productForm.controls.price50.invalid
+                  ) {
+                    <small class="field-error">
+                      Ingresa un precio mayor que cero.
+                    </small>
+                  }
+                </div>
+
+                <div class="form-field">
+                  <label for="price100">100 unidades</label>
+
+                  <div class="money-input">
+                    <span>S/</span>
+
+                    <input
+                      id="price100"
+                      type="number"
+                      formControlName="price100"
+                      min="0.01"
+                      step="0.01"
+                      inputmode="decimal"
+                    />
+                  </div>
+
+                  @if (
+                    productForm.controls.price100.touched &&
+                    productForm.controls.price100.invalid
+                  ) {
+                    <small class="field-error">
+                      Ingresa un precio mayor que cero.
+                    </small>
+                  }
+                </div>
+              </div>
+            </fieldset>
+
+            <label class="checkbox-field full-width">
+              <input
+                type="checkbox"
+                formControlName="active"
+              />
+
+              <span>
+                Registrar el producto como activo
+              </span>
+            </label>
+          </div>
+
+          @if (saveErrorMessage()) {
+            <div class="message error-message" role="alert">
+              {{ saveErrorMessage() }}
+            </div>
+          }
+
+          <div class="form-actions">
+            <button
+              class="secondary-action"
+              type="button"
+              [disabled]="saving()"
+              (click)="toggleProductForm()"
+            >
+              Cancelar
+            </button>
+
+            <button
+              class="primary-action"
+              type="submit"
+              [disabled]="saving()"
+            >
+              {{ saving() ? 'Guardando...' : 'Guardar producto' }}
+            </button>
+          </div>
+        </form>
+      }
+    </section>
+  }
 
   @if (loading()) {
     <div class="state-card">
@@ -39,7 +277,7 @@
   } @else if (products().length === 0) {
     <div class="state-card">
       <h2>No existen productos registrados</h2>
-      <p>El catálogo se encuentra vacío.</p>
+      <p>Utiliza “Nuevo producto” para crear el primero.</p>
     </div>
   } @else {
     <div class="table-card">
