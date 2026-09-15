@@ -1,0 +1,252 @@
+<main class="orders-page">
+  <nav class="page-navigation">
+    <a routerLink="/dashboard">
+      ← Volver al dashboard
+    </a>
+  </nav>
+
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">AUREA · Gestión comercial</span>
+      <h1>Pedidos</h1>
+      <p>
+        Consulta, filtra y realiza el seguimiento de los pedidos.
+      </p>
+    </div>
+
+    <div class="summary">
+      <article>
+        <strong>{{ totalElements() }}</strong>
+        <span>Pedidos</span>
+      </article>
+
+      <article>
+        <strong>
+          {{ totalPages() === 0 ? 0 : page() + 1 }}
+        </strong>
+        <span>Página actual</span>
+      </article>
+    </div>
+  </header>
+
+  <section class="filters-card">
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="applyFilters()"
+    >
+      <div class="filters-grid">
+        <div class="form-field">
+          <label for="customer">Cliente</label>
+
+          <input
+            id="customer"
+            type="search"
+            formControlName="customer"
+            placeholder="Buscar por nombre"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="status">Estado</label>
+
+          <select
+            id="status"
+            formControlName="status"
+          >
+            <option value="">Todos los estados</option>
+
+            @for (status of statuses; track status) {
+              <option [value]="status">
+                {{ statusLabel(status) }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="source">Origen</label>
+
+          <select
+            id="source"
+            formControlName="source"
+          >
+            <option value="">Todos los orígenes</option>
+
+            @for (source of sources; track source) {
+              <option [value]="source">
+                {{ sourceLabel(source) }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="pageSize">Resultados</label>
+
+          <select
+            id="pageSize"
+            formControlName="size"
+          >
+            <option [ngValue]="10">10 por página</option>
+            <option [ngValue]="20">20 por página</option>
+            <option [ngValue]="50">50 por página</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button
+          class="secondary-action"
+          type="button"
+          [disabled]="loading()"
+          (click)="clearFilters()"
+        >
+          Limpiar
+        </button>
+
+        <button
+          class="primary-action"
+          type="submit"
+          [disabled]="loading()"
+        >
+          {{ loading() ? 'Consultando...' : 'Aplicar filtros' }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  @if (loading()) {
+    <section class="state-card">
+      <span class="loader" aria-hidden="true"></span>
+      <h2>Cargando pedidos</h2>
+      <p>Estamos consultando la API de AUREA.</p>
+    </section>
+  } @else if (errorMessage()) {
+    <section class="state-card error-card">
+      <h2>No pudimos cargar los pedidos</h2>
+      <p>{{ errorMessage() }}</p>
+
+      <button
+        type="button"
+        (click)="loadOrders(page())"
+      >
+        Intentar nuevamente
+      </button>
+    </section>
+  } @else if (orders().length === 0) {
+    <section class="state-card">
+      <h2>No se encontraron pedidos</h2>
+      <p>
+        No existen pedidos que coincidan con los filtros utilizados.
+      </p>
+    </section>
+  } @else {
+    <section class="table-card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Pedido</th>
+              <th>Cliente</th>
+              <th>Entrega</th>
+              <th>Importes</th>
+              <th>Estado</th>
+              <th>Origen</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (order of orders(); track order.id) {
+              <tr>
+                <td>
+                  <strong>#{{ order.id }}</strong>
+                  <small>
+                    {{ order.requiresDelivery ? 'Delivery' : 'Recojo' }}
+                  </small>
+                </td>
+
+                <td>
+                  <strong>{{ order.customerName }}</strong>
+                  <small>
+                    {{ order.district || 'Sin distrito' }}
+                  </small>
+                </td>
+
+                <td>
+                  <strong>
+                    {{ order.deliveryDate || 'Sin fecha' }}
+                  </strong>
+                  <small>
+                    {{ formatTime(order.deliveryTime) }}
+                  </small>
+                </td>
+
+                <td>
+                  <div class="amounts">
+                    <small>
+                      Productos:
+                      {{ formatMoney(order.productsSubtotal) }}
+                    </small>
+
+                    <small>
+                      Delivery:
+                      {{ formatMoney(order.deliveryFee) }}
+                    </small>
+
+                    <strong>
+                      Total: {{ formatMoney(order.total) }}
+                    </strong>
+                  </div>
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.status-draft]="order.status === 'DRAFT'"
+                    [class.status-confirmed]="order.status === 'CONFIRMED'"
+                    [class.status-preparing]="order.status === 'PREPARING'"
+                    [class.status-delivered]="order.status === 'DELIVERED'"
+                    [class.status-cancelled]="order.status === 'CANCELLED'"
+                  >
+                    {{ statusLabel(order.status) }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="source">
+                    {{ sourceLabel(order.source) }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="pagination">
+        <button
+          type="button"
+          [disabled]="first() || loading()"
+          (click)="previousPage()"
+        >
+          ← Anterior
+        </button>
+
+        <span>
+          Página
+          {{ totalPages() === 0 ? 0 : page() + 1 }}
+          de {{ totalPages() }}
+        </span>
+
+        <button
+          type="button"
+          [disabled]="last() || loading()"
+          (click)="nextPage()"
+        >
+          Siguiente →
+        </button>
+      </footer>
+    </section>
+  }
+</main>
